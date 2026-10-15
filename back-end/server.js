@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const server = express();
 const pool = require('./db');
 server.use(express.json());
@@ -13,7 +14,8 @@ server.get('/products/:id', async (req, res) => {
 });
 server.post('/signup', async (req, res) => { 
   const { full_name, email, password } = req.body; 
-  await pool.query('INSERT INTO customers (full_name, email, password) VALUES ($1, $2, $3)', [full_name, email, password]);
+  const hashedPassword = await bcrypt.hash(password, 10);
+  await pool.query('INSERT INTO customers (full_name, email, password) VALUES ($1, $2, $3)', [full_name, email, hashedPassword]);
   res.status(201).send('Customer created successfully');
 });
 server.post('/signin', async (req, res) => { 
@@ -23,7 +25,7 @@ server.post('/signin', async (req, res) => {
     return res.status(401).send('Email not found');
   };
   const customer = result.rows[0];
-  if (customer.password !== password) {
+  if  (!(await bcrypt.compare(password, customer.password))) {
     return res.sendStatus(401);
   }
   res.sendStatus(200);
