@@ -8,8 +8,8 @@ server.get('/products', async (req, res) => {
   res.send(result.rows);
 });
 server.get('/products/:id', async (req, res) => {
-  const { id } = req.params;
-  const result = await pool.query('SELECT * FROM products where id_product = $1', [id]);
+  const { id_product } = req.params;
+  const result = await pool.query('SELECT * FROM products where id_product = $1', [id_product]);
   res.send(result.rows);
 });
 server.post('/signup', async (req, res) => { 
@@ -28,7 +28,22 @@ server.post('/signin', async (req, res) => {
   if  (!(await bcrypt.compare(password, customer.password))) {
     return res.sendStatus(401);
   }
+  res.status(200).send(customer);
+});
+server.post('/cart_items', async (req, res) => {
+  const { id_product, id_customer, quantity } = req.body;
+  await pool.query('INSERT INTO cart_items (id_product, id_customer, quantity) VALUES ($1, $2, $3)', [id_product, id_customer, quantity]);
+  res.sendStatus(201);
+});
+server.delete('/cart_items', async (req, res) => {
+  const { id_product , id_customer } = req.body;
+  await pool.query('DELETE FROM cart_items where id_product = $1 AND id_customer = $2', [id_product, id_customer]);
   res.sendStatus(200);
+});
+server.get('/cart_items/:id_customer', async (req, res) => {
+  const { id_customer } = req.params;
+  const result = await pool.query('SELECT * FROM cart_items WHERE id_customer = $1', [id_customer]);
+  res.send(result.rows);
 });
 server.listen(3000, () => {
   console.log('Server is running on port 3000');
