@@ -45,6 +45,27 @@ server.get('/cart_items/:id_customer', async (req, res) => {
   const result = await pool.query('SELECT * FROM cart_items WHERE id_customer = $1', [id_customer]);
   res.send(result.rows);
 });
+server.get('/orders/:id_customer', async (req, res) => {
+  const { id_customer } = req.params;
+  const result = await pool.query('SELECT * FROM orders WHERE id_customer = $1', [id_customer]);
+  res.send(result.rows);
+});
+server.post('cart_items', async (req, res) => {
+  const { id_product, id_customer, quantity } = req.body;
+  await pool.query('INSERT INTO orders (id_customer) VALUES ($1); INSERT INTO cart_itmes (id_product, quantity) values ($2, $3)', [id_customer, id_product, quantity]);
+  res.sendStatus(200);
+});
+server.post('/orders', async (req, res) => {
+  const { id_customer } = req.body;
+  const orderResult = await pool.query('INSERT INTO orders (id_customer) VALUES ($1) RETURNING id_order', [id_customer]);
+  const id_order = orderResult.rows[0].id_order;
+  const cartResult = await pool.query('SELECT id_product, quantity FROM cart_items WHERE id_customer = $1', [id_customer]);
+  for (const item of cartResult.rows) {
+    await pool.query('INSERT INTO order_items (id_order, id_product, quantity) VALUES ($1, $2, $3)', [id_order, item.id_product, item.quantity]);
+  }
+  await pool.query('DELETE FROM cart_items WHERE id_customer = $1', [id_customer]);
+  res.sendStatus(201);
+});
 server.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
