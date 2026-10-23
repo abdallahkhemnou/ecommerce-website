@@ -1,6 +1,8 @@
 const express = require('express');
+const cors = require('cors');
 const bcrypt = require('bcrypt');
 const server = express();
+server.use(cors());
 const pool = require('./db');
 server.use(express.json());
 server.get('/products', async (req, res) => {
