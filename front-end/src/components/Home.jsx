@@ -2,6 +2,7 @@ import Header from "./Header";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ShieldCheck, Truck, Star } from 'lucide-react';
+import Footer from "./Footer";
 function Home() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
@@ -50,31 +51,32 @@ function Home() {
           ))}
         </div>
         <div className="w-full flex flex-col md:flex-row justify-around py-10 gap-5 px-6 md:px-30">
-  <div className="flex flex-col gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 flex-1">
-    <div className="w-10 h-10 flex items-center justify-center bg-[#ff4d2e]/10 rounded-lg">
-      <ShieldCheck className="text-[#ff4d2e]" size={20} />
-    </div>
-    <h3 className="text-white font-semibold">Verified Quality</h3>
-    <p className="text-white/50 text-sm">Every vehicle passes a multi-point inspection before it's listed.</p>
-  </div>
+          <div className="flex flex-col gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 flex-1">
+            <div className="w-10 h-10 flex items-center justify-center bg-[#ff4d2e]/10 rounded-lg">
+              <ShieldCheck className="text-[#ff4d2e]" size={20} />
+            </div>
+            <h3 className="text-white font-semibold">Verified Quality</h3>
+            <p className="text-white/50 text-sm">Every vehicle passes a multi-point inspection before it's listed.</p>
+          </div>
 
-  <div className="flex flex-col gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 flex-1">
-    <div className="w-10 h-10 flex items-center justify-center bg-[#ff4d2e]/10 rounded-lg">
-      <Truck className="text-[#ff4d2e]" size={20} />
-    </div>
-    <h3 className="text-white font-semibold">Nationwide Delivery</h3>
-    <p className="text-white/50 text-sm">Get your car delivered straight to your door, anywhere.</p>
-  </div>
+          <div className="flex flex-col gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 flex-1">
+            <div className="w-10 h-10 flex items-center justify-center bg-[#ff4d2e]/10 rounded-lg">
+              <Truck className="text-[#ff4d2e]" size={20} />
+            </div>
+            <h3 className="text-white font-semibold">Nationwide Delivery</h3>
+            <p className="text-white/50 text-sm">Get your car delivered straight to your door, anywhere.</p>
+          </div>
 
-  <div className="flex flex-col gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 flex-1">
-    <div className="w-10 h-10 flex items-center justify-center bg-[#ff4d2e]/10 rounded-lg">
-      <Star className="text-[#ff4d2e]" size={20} />
-    </div>
-    <h3 className="text-white font-semibold">Trusted by Buyers</h3>
-    <p className="text-white/50 text-sm">Rated 4.9/5 across hundreds of completed sales.</p>
-  </div>
-</div>
+          <div className="flex flex-col gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 flex-1">
+            <div className="w-10 h-10 flex items-center justify-center bg-[#ff4d2e]/10 rounded-lg">
+              <Star className="text-[#ff4d2e]" size={20} />
+            </div>
+            <h3 className="text-white font-semibold">Trusted by Buyers</h3>
+            <p className="text-white/50 text-sm">Rated 4.9/5 across hundreds of completed sales.</p>
+          </div>
+        </div>
       </div>
+      <Footer />
     </>
   )
 };
