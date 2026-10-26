@@ -47,6 +47,7 @@ function Home() {
                 <p className="text-[#ff4d2e]">${Number(car.price).toFixed(2)}</p>
               </div>
               <p className="text-white/50 text-sm mt-1">{car.description}</p>
+              <button className="w-full mt-3 border rounded-full bg-[#ff4d2e] py-2 hover:bg-[#ff4d2e]/80 text-sm text-white cursor-pointer">Add to Cart</button>
             </div>
           ))}
         </div>

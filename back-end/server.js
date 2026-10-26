@@ -33,8 +33,8 @@ server.post('/signin', async (req, res) => {
   res.status(200).send(customer);
 });
 server.post('/cart_items', async (req, res) => {
-  const { id_product, id_customer, quantity } = req.body;
-  await pool.query('INSERT INTO cart_items (id_product, id_customer, quantity) VALUES ($1, $2, $3)', [id_product, id_customer, quantity]);
+  const { id_product, id_customer, } = req.body;
+  await pool.query('INSERT INTO cart_items (id_product, id_customer) VALUES ($1, $2)', [id_product, id_customer]);
   res.sendStatus(201);
 });
 server.delete('/cart_items', async (req, res) => {
@@ -44,7 +44,12 @@ server.delete('/cart_items', async (req, res) => {
 });
 server.get('/cart_items/:id_customer', async (req, res) => {
   const { id_customer } = req.params;
-  const result = await pool.query('SELECT * FROM cart_items WHERE id_customer = $1', [id_customer]);
+  const result = await pool.query(`
+    SELECT products.product_name, products.price, products.image_url, cart_items.quantity, cart_items.id_product
+    FROM cart_items
+    JOIN products ON cart_items.id_product = products.id_product
+    WHERE cart_items.id_customer = $1
+  `, [id_customer]);
   res.send(result.rows);
 });
 server.get('/orders/:id_customer', async (req, res) => {
