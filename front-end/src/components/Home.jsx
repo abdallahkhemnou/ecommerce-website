@@ -3,13 +3,23 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ShieldCheck, Truck, Star } from 'lucide-react';
 import Footer from "./Footer";
+import { useNavigate } from 'react-router-dom';
 function Home() {
   const [products, setProducts] = useState([]);
+  const id_customer = localStorage.getItem('id_customer');
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get('http://localhost:3000/products').then((response) => {
       setProducts(response.data);
     });
   }, []);
+  function handleAddToCart(id_product) {
+    if (!id_customer) {
+      navigate('/signin');
+      return;
+    }
+    axios.post('http://localhost:3000/cart_items', { id_product, id_customer });
+  }
   return (
     <>
       <Header />
@@ -47,7 +57,7 @@ function Home() {
                 <p className="text-[#ff4d2e]">${Number(car.price).toFixed(2)}</p>
               </div>
               <p className="text-white/50 text-sm mt-1">{car.description}</p>
-              <button className="w-full mt-3 border rounded-full bg-[#ff4d2e] py-2 hover:bg-[#ff4d2e]/80 text-sm text-white cursor-pointer">Add to Cart</button>
+              <button className="w-full mt-3 border rounded-full bg-[#ff4d2e] py-2 hover:bg-[#ff4d2e]/80 text-sm text-white cursor-pointer" onClick={() => handleAddToCart(car.id_product)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -59,7 +69,6 @@ function Home() {
             <h3 className="text-white font-semibold">Verified Quality</h3>
             <p className="text-white/50 text-sm">Every vehicle passes a multi-point inspection before it's listed.</p>
           </div>
-
           <div className="flex flex-col gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 flex-1">
             <div className="w-10 h-10 flex items-center justify-center bg-[#ff4d2e]/10 rounded-lg">
               <Truck className="text-[#ff4d2e]" size={20} />
@@ -67,7 +76,6 @@ function Home() {
             <h3 className="text-white font-semibold">Nationwide Delivery</h3>
             <p className="text-white/50 text-sm">Get your car delivered straight to your door, anywhere.</p>
           </div>
-
           <div className="flex flex-col gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 flex-1">
             <div className="w-10 h-10 flex items-center justify-center bg-[#ff4d2e]/10 rounded-lg">
               <Star className="text-[#ff4d2e]" size={20} />
