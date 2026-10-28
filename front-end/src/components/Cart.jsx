@@ -23,26 +23,46 @@ function Cart() {
       setCart(cart.filter((item) => item.id_product !== id_product));
     });
   };
+  const total = cart.reduce((sum, car) => sum + Number(car.price), 0);
   return (
     <>
       <Header />
-      <h1 className=" px-6 md:px-16 mt-10 mb-2 text-4xl font-bold text-white">Your Cart</h1>
-      <p className=" px-6 md:px-20 text-white/50">items in your cart</p>
-      <div className="flex justify-around gap-6 w-full md:px-16 py-8">
-        {cart.map((car) => (
-          <div key={car.id_product} className="flex flex-col gap-3 border border-white/10 rounded-2xl">
-            <div className="flex justify-between">
-              <div className="flex gap-2 nowrap">
-                <img src={car.image_url} alt={car.product_name}/>
-                <div className="flex flex-col py-2">
-                  <p>{car.product_name}</p>
-                  <p className="text-[#ff4d2e]">${Number(car.price).toFixed(2)}</p>
+      <h1 className="px-6 md:px-16 mt-10 mb-2 text-4xl font-bold text-white">Your Cart</h1>
+      <p className="px-6 md:px-20 text-white/50">{cart.length} items in your cart</p>
+      <div className="flex flex-col md:flex-row gap-6 w-full px-6 md:px-16 py-8">
+        <div className="flex flex-col gap-4 flex-1">
+          {cart.map((car) => (
+            <div key={car.id_product} className="flex flex-col gap-3 border border-white/10 rounded-2xl">
+              <div className="flex justify-between">
+                <div className="flex gap-2 nowrap">
+                  <img src={car.image_url} alt={car.product_name}/>
+                  <div className="flex flex-col py-2">
+                    <p>{car.product_name}</p>
+                    <p className="text-[#ff4d2e]">${Number(car.price).toFixed(2)}</p>
+                  </div>
                 </div>
+                <Trash2 className="text-white/40 hover:text-[#ff4d2e]" size={20} onClick={() => handleRemove(car.id_product)}/>
               </div>
-              <Trash2 className="text-white/40 hover:text-[#ff4d2e]" size={20} onClick={() => handleRemove(car.id_product)}/>
             </div>
+          ))}
+        </div>
+        <div className="w-full md:w-80 bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col gap-4 h-fit">
+          <p className="text-white font-semibold text-lg">Order Summary</p>
+          <div className="flex justify-between text-sm">
+            <p className="text-white/50">Subtotal</p>
+            <p className="text-white">${total.toFixed(2)}</p>
           </div>
-        ))}
+          <div className="flex justify-between text-sm">
+            <p className="text-white/50">Delivery</p>
+            <p className="text-white">Free</p>
+          </div>
+          <div className="border-t border-white/10 pt-4 flex justify-between items-center">
+            <p className="text-white font-semibold">Total</p>
+            <p className="text-[#ff4d2e] text-xl font-bold">${total.toFixed(2)}</p>
+          </div>
+          <button className="w-full border rounded-full bg-[#ff4d2e] py-3 hover:bg-[#ff4d2e]/80 text-sm font-semibold text-white cursor-pointer">Proceed to Checkout</button>
+          <p className="text-white/50 text-sm text-center cursor-pointer hover:text-white">Continue Shopping</p>
+        </div>
       </div>
       <Footer />
     </>
