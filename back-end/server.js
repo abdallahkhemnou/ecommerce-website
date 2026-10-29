@@ -24,13 +24,17 @@ server.post('/signin', async (req, res) => {
   const { email, password } = req.body;
   const result = await pool.query('SELECT * FROM customers WHERE email = $1', [email]);
   if (result.rows.length === 0) {
-    return res.status(401).send('Email not found');
+    return res.sendStatus(401);
   };
   const customer = result.rows[0];
   if  (!(await bcrypt.compare(password, customer.password))) {
     return res.sendStatus(401);
   }
-  res.status(200).send(customer);
+  res.status(200).send({
+    id_customer: customer.id_customer,
+    full_name: customer.full_name,
+    email: customer.email
+  });
 });
 server.post('/cart_items', async (req, res) => {
   const { id_product, id_customer, } = req.body;
