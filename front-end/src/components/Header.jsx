@@ -25,13 +25,13 @@ function Header() {
       </div>
       {menuOpen && (
         <div className='md:hidden flex flex-col items-center gap-5 pb-6 text-white'>
-          <p className='cursor-pointer'>Home</p>
-          <div className='flex items-center gap-1 cursor-pointer'>
+          <p className='cursor-pointer' onClick={() => { navigate('/'); setMenuOpen(false); }}>Home</p>
+          <div className='flex items-center gap-1 cursor-pointer' onClick={() => { navigate('/cart'); setMenuOpen(false); }}>
             <ShoppingCart className="text-white" size={14} />
             <p>cart</p>
           </div>
-          <p className='cursor-pointer'>about</p>
-          <button className="border rounded-full bg-[#ff4d2e] py-1 px-3 hover:bg-[#ff4d2e]/80 text-sm cursor-pointer">sign in</button>
+          <p className='cursor-pointer' onClick={() => { navigate('/about'); setMenuOpen(false); }}>about</p>
+          <button className="border rounded-full bg-[#ff4d2e] py-1 px-3 hover:bg-[#ff4d2e]/80 text-sm cursor-pointer" onClick={() => { navigate('/sign-In'); setMenuOpen(false); }}>sign in</button>
         </div>
       )}
     </div>
