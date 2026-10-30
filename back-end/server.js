@@ -75,6 +75,17 @@ server.post('/orders', async (req, res) => {
   await pool.query('DELETE FROM cart_items WHERE id_customer = $1', [id_customer]);
   res.sendStatus(201);
 });
+server.get('/check-out/:id_customer', async (req, res) => {
+  const { id_customer } = req.params;
+  const result = await pool.query(`
+    SELECT products.product_name, products.price, products.image_url, customers.full_name, customers.email
+    FROM cart_items
+    JOIN products ON cart_items.id_product = products.id_product
+    JOIN customers ON cart_items.id_customer = customers.id_customer
+    WHERE cart_items.id_customer = $1
+  `, [id_customer]);
+  res.send(result.rows);
+});
 server.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
