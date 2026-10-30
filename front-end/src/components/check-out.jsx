@@ -2,10 +2,18 @@ import Header from './Header';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 import { Truck } from "lucide-react";
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 function CheckOut() {
   const navigate = useNavigate();
-
+  const [cart, setCart] = useState([]);
+  const id_customer = localStorage.getItem('id_customer');
+  const total = cart.reduce((sum, car) => sum + Number(car.price), 0);
+  useEffect(() => {
+    axios.get(`http://localhost:3000/check-out/${id_customer}`).then((response) => {
+      setCart(response.data);
+    });
+  }, []);
   return (
     <>
       <Header />
@@ -21,23 +29,28 @@ function CheckOut() {
             <p className="text-[#ff4d2e] text-xs font-semibold tracking-widest uppercase">Your details</p>
             <div className="flex justify-between text-sm">
               <p className="text-white/50">Name</p>
-              <p className="text-white"></p>
+              <p className="text-white">{cart[0]?.full_name}</p>
             </div>
             <div className="flex justify-between text-sm">
               <p className="text-white/50">Email</p>
-              <p className="text-white"></p>
+              <p className="text-white">{cart[0]?.email}</p>
             </div>
           </div>
 
           <div className="flex flex-col gap-4 px-5 py-5 border border-white/10 bg-white/5 rounded-2xl w-full">
             <p className="text-[#ff4d2e] text-xs font-semibold tracking-widest uppercase">Your items</p>
-            <div className="flex justify-between items-center gap-3">
-              <div className="flex items-center gap-4">
-                <img src="" alt="" className="w-16 h-12 object-cover rounded-lg" />
-                <p className="text-white font-medium text-sm"></p>
+            {cart.map((item, index) => (
+              <div
+                key={item.id_product}
+                className={`flex justify-between items-center gap-3 ${index !== 0 ? "border-t border-white/10 pt-4" : ""}`}
+              >
+                <div className="flex items-center gap-4">
+                  <img src={item.image_url} alt={item.product_name} className="w-18 h-14 object-cover rounded-lg" />
+                  <p className="text-white font-medium text-sm">{item.product_name}</p>
+                </div>
+                <p className="text-[#ff4d2e] text-sm font-medium">${Number(item.price).toFixed(2)}</p>
               </div>
-              <p className="text-[#ff4d2e] text-sm font-medium"></p>
-            </div>
+            ))}
           </div>
 
           <div className="flex items-center px-5 py-4 border border-white/10 bg-white/5 rounded-2xl w-full gap-3">
@@ -47,11 +60,11 @@ function CheckOut() {
 
         </div>
 
-        <div className="w-full md:w-80  h-fit flex flex-col gap-5 px-5 py-5 border border-white/10 bg-white/5 rounded-2xl">
+        <div className="w-full md:w-80 h-fit flex flex-col gap-3 px-5 py-5 border border-white/10 bg-white/5 rounded-2xl">
           <h2 className="text-white text-lg font-semibold">Order Summary</h2>
           <div className="flex justify-between text-sm">
             <p className="text-white/50">Subtotal</p>
-            <p className="text-white"></p>
+            <p className="text-white">${total}</p>
           </div>
           <div className="flex justify-between text-sm">
             <p className="text-white/50">Delivery</p>
@@ -59,7 +72,7 @@ function CheckOut() {
           </div>
           <div className="border-t border-white/10 pt-3 flex justify-between items-center">
             <p className="text-white font-semibold">Total</p>
-            <p className="text-[#ff4d2e] text-xl font-bold"></p>
+            <p className="text-[#ff4d2e] text-xl font-bold">${total}</p>
           </div>
           <button className="w-full bg-[#ff4d2e] hover:bg-[#ff4d2e]/80 text-black font-semibold py-3 rounded-full cursor-pointer mt-1">
             Place order
