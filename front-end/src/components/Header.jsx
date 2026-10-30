@@ -14,7 +14,7 @@ function Header() {
             <ShoppingCart className="text-white" size={14} />
             <p onClick={() => navigate('/cart')}>cart</p>
           </div>
-          <p className='cursor-pointer'>about</p>
+          <p className='cursor-pointer' onClick={() => navigate('/about')}>about</p>
         </div>
         <button className="hidden md:block border rounded-full bg-[#ff4d2e] py-1 px-3 hover:bg-[#ff4d2e]/80 text-sm cursor-pointer" onClick={() => navigate('/sign-In')}>
           sign in

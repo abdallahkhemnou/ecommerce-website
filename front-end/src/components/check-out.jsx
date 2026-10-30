@@ -9,6 +9,7 @@ function CheckOut() {
   const [cart, setCart] = useState([]);
   const id_customer = localStorage.getItem('id_customer');
   const total = cart.reduce((sum, car) => sum + Number(car.price), 0);
+  const [message, setMessage] = useState(false);
   useEffect(() => {
     axios.get(`http://localhost:3000/check-out/${id_customer}`).then((response) => {
       setCart(response.data);
@@ -74,9 +75,10 @@ function CheckOut() {
             <p className="text-white font-semibold">Total</p>
             <p className="text-[#ff4d2e] text-xl font-bold">${total}</p>
           </div>
-          <button className="w-full bg-[#ff4d2e] hover:bg-[#ff4d2e]/80 text-black font-semibold py-3 rounded-full cursor-pointer mt-1">
+          <button className="w-full bg-[#ff4d2e] hover:bg-[#ff4d2e]/80 text-black font-semibold py-3 rounded-full cursor-pointer mt-1" onClick={() => {setMessage(true)}}>
             Place order
           </button>
+          {message && <p className="text-red-500 text-sm px-11">Order placed successfully! 🎉</p>}
           <p
             className="text-center text-white/50 text-sm cursor-pointer hover:text-white"
             onClick={() => navigate('/cart')}
