@@ -86,6 +86,6 @@ server.get('/check-out/:id_customer', async (req, res) => {
   `, [id_customer]);
   res.send(result.rows);
 });
-server.listen(3000, () => {
-  console.log('Server is running on port 3000');
+server.listen(process.env.PORT || 3000, () => {
+  console.log('Server is running');
 });

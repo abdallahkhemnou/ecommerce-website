@@ -15,7 +15,7 @@ function SignUp() {
     e.preventDefault();
     setError("");
     try {
-      await axios.post('http://localhost:3000/signup', { full_name: fullName, email, password });
+      await axios.post('https://veloce-backend-2nmq.onrender.com/signup', { full_name: fullName, email, password });
       navigate('/sign-in');
     } catch (error) {
       setError('Could not create the account. Try another email.');

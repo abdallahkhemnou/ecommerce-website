@@ -13,12 +13,12 @@ function Cart() {
       navigate('/sign-In');
       return;
     }
-    axios.get(`http://localhost:3000/cart_items/${id_customer}`).then((response) => { 
+    axios.get(`https://veloce-backend-2nmq.onrender.com/cart_items/${id_customer}`).then((response) => { 
       setCart(response.data);
     })
   }, []);
   function handleRemove(id_product) {
-    axios.delete('http://localhost:3000/cart_items', { data: { id_product, id_customer } })
+    axios.delete('https://veloce-backend-2nmq.onrender.com/cart_items', { data: { id_product, id_customer } })
     .then(() => {
       setCart(cart.filter((item) => item.id_product !== id_product));
     });

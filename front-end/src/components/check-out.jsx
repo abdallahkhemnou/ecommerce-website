@@ -11,7 +11,7 @@ function CheckOut() {
   const total = cart.reduce((sum, car) => sum + Number(car.price), 0);
   const [message, setMessage] = useState(false);
   useEffect(() => {
-    axios.get(`http://localhost:3000/check-out/${id_customer}`).then((response) => {
+    axios.get(`https://veloce-backend-2nmq.onrender.com/check-out/${id_customer}`).then((response) => {
       setCart(response.data);
     });
   }, []);

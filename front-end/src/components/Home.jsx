@@ -9,7 +9,7 @@ function Home() {
   const id_customer = localStorage.getItem('id_customer');
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get('http://localhost:3000/products').then((response) => {
+    axios.get('https://veloce-backend-2nmq.onrender.com/products').then((response) => {
       setProducts(response.data);
     });
   }, []);
@@ -18,7 +18,7 @@ function Home() {
       navigate('/sign-In');
       return;
     }
-    axios.post('http://localhost:3000/cart_items', { id_product, id_customer });
+    axios.post('https://veloce-backend-2nmq.onrender.com/cart_items', { id_product, id_customer });
   }
   return (
     <>
