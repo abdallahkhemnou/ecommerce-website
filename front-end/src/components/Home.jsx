@@ -15,7 +15,7 @@ function Home() {
   }, []);
   function handleAddToCart(id_product) {
     if (!id_customer) {
-      navigate('/signin');
+      navigate('/sign-In');
       return;
     }
     axios.post('http://localhost:3000/cart_items', { id_product, id_customer });

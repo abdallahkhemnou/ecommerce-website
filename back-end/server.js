@@ -31,9 +31,7 @@ server.post('/signin', async (req, res) => {
     return res.sendStatus(401);
   }
   res.status(200).send({
-    id_customer: customer.id_customer,
-    full_name: customer.full_name,
-    email: customer.email
+    id_customer: customer.id_customer
   });
 });
 server.post('/cart_items', async (req, res) => {

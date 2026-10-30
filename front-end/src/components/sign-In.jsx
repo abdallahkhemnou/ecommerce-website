@@ -15,8 +15,8 @@ function SignIn() {
     setError("");
     try {
       const response = await axios.post('http://localhost:3000/signin', { email, password });
-      const { id_customer, full_name } = response.data;
-      localStorage.setItem('customer', JSON.stringify({ id_customer, full_name, email }));
+      const { id_customer,} = response.data;
+      localStorage.setItem('id_customer',( id_customer));
       navigate('/');
     } catch (error) {
       setError('Invalid email or password !');

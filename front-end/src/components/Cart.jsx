@@ -10,7 +10,7 @@ function Cart() {
   const navigate = useNavigate();
   useEffect(() => { 
     if (!id_customer) {
-      navigate('/signin');
+      navigate('/sign-In');
       return;
     }
     axios.get(`http://localhost:3000/cart_items/${id_customer}`).then((response) => { 
@@ -33,15 +33,15 @@ function Cart() {
         <div className="flex flex-col gap-4 flex-1">
           {cart.map((car) => (
             <div key={car.id_product} className="flex flex-col gap-3 border border-white/10 rounded-2xl">
-              <div className="flex justify-between">
+              <div className="flex justify-between relative">
                 <div className="flex gap-2 nowrap">
-                  <img src={car.image_url} alt={car.product_name}/>
-                  <div className="flex flex-col py-2">
-                    <p>{car.product_name}</p>
+                  <img src={car.image_url} alt={car.product_name} className="w-32 h-24 object-cover rounded-xl m-2"/>
+                  <div className="flex flex-col justify-center">
+                    <p className="text-white">{car.product_name}</p>
                     <p className="text-[#ff4d2e]">${Number(car.price).toFixed(2)}</p>
                   </div>
                 </div>
-                <Trash2 className="text-white/40 hover:text-[#ff4d2e]" size={20} onClick={() => handleRemove(car.id_product)}/>
+                <Trash2 className="text-white/40 hover:text-[#ff4d2e] absolute right-6 top-1/2 -translate-y-1/2" size={20} onClick={() => handleRemove(car.id_product)}/>
               </div>
             </div>
           ))}
@@ -61,7 +61,7 @@ function Cart() {
             <p className="text-[#ff4d2e] text-xl font-bold">${total.toFixed(2)}</p>
           </div>
           <button className="w-full border rounded-full bg-[#ff4d2e] py-3 hover:bg-[#ff4d2e]/80 text-sm font-semibold text-white cursor-pointer">Proceed to Checkout</button>
-          <p className="text-white/50 text-sm text-center cursor-pointer hover:text-white">Continue Shopping</p>
+          <p className="text-white/50 text-sm text-center cursor-pointer hover:text-white" onClick={() => navigate('/')}>Continue Shopping</p>
         </div>
       </div>
       <Footer />

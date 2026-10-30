@@ -16,7 +16,9 @@ function Header() {
           </div>
           <p className='cursor-pointer'>about</p>
         </div>
-        <button className="hidden md:block border rounded-full bg-[#ff4d2e] py-1 px-3 hover:bg-[#ff4d2e]/80 text-sm cursor-pointer">sign in</button>
+        <button className="hidden md:block border rounded-full bg-[#ff4d2e] py-1 px-3 hover:bg-[#ff4d2e]/80 text-sm cursor-pointer" onClick={() => navigate('/sign-In')}>
+          sign in
+        </button>
         <button className='md:hidden text-white cursor-pointer' onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
