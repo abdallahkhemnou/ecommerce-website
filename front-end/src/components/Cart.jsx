@@ -60,7 +60,7 @@ function Cart() {
             <p className="text-white font-semibold">Total</p>
             <p className="text-[#ff4d2e] text-xl font-bold">${total.toFixed(2)}</p>
           </div>
-          <button className="w-full border rounded-full bg-[#ff4d2e] py-3 hover:bg-[#ff4d2e]/80 text-sm font-semibold text-white cursor-pointer">Proceed to Checkout</button>
+          <button className="w-full border rounded-full bg-[#ff4d2e] py-3 hover:bg-[#ff4d2e]/80 text-sm font-semibold text-white cursor-pointer" onClick={() => navigate('/check-out')}>Proceed to Checkout</button>
           <p className="text-white/50 text-sm text-center cursor-pointer hover:text-white" onClick={() => navigate('/')}>Continue Shopping</p>
         </div>
       </div>
